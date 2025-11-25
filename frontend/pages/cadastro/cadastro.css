@@ -1,0 +1,144 @@
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Define uma fonte sem ser a padrão do sistema para se aproximar do layout */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Corpo da Página */
+body {
+    background-color: #f7f9fc; /* Fundo cinza claro/azul claro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estilo do Cabeçalho (Título Principal) */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.header p {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* Estilo do Cartão */
+.card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 380px; /* Limita a largura do card */
+}
+
+/* Estilo da Seção de Título do Card */
+.card-header {
+    margin-bottom: 25px;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.card-header p {
+    font-size: 0.9rem;
+    color: #6c757d;
+    line-height: 1.4;
+}
+
+/* Estilo dos Rótulos (Labels) */
+label {
+    display: block;
+    font-size: 0.9rem;
+    color: #343a40;
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* Estilo dos Campos de Input e Select */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da; /* Borda padrão */
+    border-radius: 4px; /* Borda mais quadrada, como no layout */
+    font-size: 1rem;
+    color: #495057;
+    background-color: #ffffff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Estilo específico para o campo select para parecer um input */
+select {
+    appearance: none; /* Remove o estilo padrão do SO */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%236c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 35px; /* Adiciona espaço para a seta */
+}
+
+input::placeholder {
+    color: #6c757d;
+    opacity: 0.6; /* Para deixar o placeholder mais claro */
+}
+
+
+/* Estilo do Botão de Envio (Cadastrar) */
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 25px;
+    background-color: #007bff; /* Azul forte, conforme o layout anterior */
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0069d9;
+}
+
+/* Estilo do Link de Login */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.login-link a {
+    color: #007bff; /* Cor azul do link */
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
