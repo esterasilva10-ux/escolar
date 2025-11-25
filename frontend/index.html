@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secretaria Escolar - Login</title>
+    <title>Sistema de Gestão Escolar - Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Secretaria Escolar</h1>
-        <p>Sistema de Gestão Acadêmica</p>
-    </div>
-
     <div class="login-card">
-        <div class="login-header">
-            <h2>Login</h2>
+        <div class="header-section">
+            <div class="icon-container">
+                <i class="graduation-cap"></i> 
+            </div>
+            <h2>Sistema de Gestão Escolar</h2>
             <p>Entre com suas credenciais para acessar o sistema</p>
-            <p class="default-credentials-inline">Credenciais padrão: admin@escola.com / admin123</p>
         </div>
 
         <form>
@@ -24,16 +21,23 @@
             <input type="email" id="email" placeholder="seu@email.com">
 
             <label for="password">Senha</label>
-            <input type="password" id="password" placeholder="********">
+            <input type="password" id="password" value="********">
 
             <button type="submit" class="login-button">Entrar</button>
 
-            <div class="register-link">
+            <div class="register-prompt">
                 Não tem uma conta? <a href="pages/cadastro/cadastro.html">Cadastre-se</a>
             </div>
         </form>
+
+        <div class="test-users-section">
+            <h3>Usuários de teste:</h3>
+            <ul>
+                <li>Admin: admin@escola.com / admin123</li>
+                <li>Secretária: secretaria@escola.com / secret123</li>
+                <li>Professor: professor@escola.com / prof123</li>
+            </ul>
+        </div>
     </div>
-    
-    <p class="default-credentials-footer">Credenciais padrão: admin@escola.com / admin123</p>
 </body>
 </html>
