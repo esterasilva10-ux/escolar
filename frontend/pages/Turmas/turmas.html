@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Alunos - Admin</title>
-    <link rel="stylesheet" href="Aluno.css">
+    <title>Gestão de Turmas - Admin</title>
+    <link rel="stylesheet" href="turmas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -12,55 +12,43 @@
     <div id="modal-overlay" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Matricular Novo Aluno</h2>
+                <h2>Criar Nova Turma</h2>
                 <button class="close-btn" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <form class="enrollment-form">
                 <div class="form-group">
-                    <label for="nome-aluno">Nome Completo</label>
-                    <input type="text" id="nome-aluno" placeholder="Digite o nome completo do aluno" required>
+                    <label for="nome-turma">Nome da Turma</label>
+                    <input type="text" id="nome-turma" placeholder="Ex: 1º Ano A - Ensino Médio" required>
                 </div>
                 <div class="form-group">
-                    <label for="data-nasc">Data de Nascimento</label>
-                    <input type="date" id="data-nasc" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="turma-aluno">Turma</label>
-                    <select id="turma-aluno" required>
-                        <option value="" disabled selected>Selecione a Turma</option>
-                        
-                        <optgroup label="Ensino Fundamental">
-                            <option value="6a_ef">6º Ano A</option>
-                            <option value="7b_ef">7º Ano B</option>
-                            <option value="8c_ef">8º Ano C</option>
-                            <option value="9d_ef">9º Ano D</option>
-                        </optgroup>
-                        
-                        <optgroup label="Ensino Médio">
-                            <option value="1a_em">1º Ano A</option>
-                            <option value="2b_em">2º Ano B</option>
-                            <option value="3c_em">3º Ano C</option>
-                        </optgroup>
-                        
-                        <optgroup label="Cursos Técnicos">
-                            <option value="1t_info">1º Ano - Técnico em Informática</option>
-                            <option value="2t_adm">2º Ano - Técnico em Administração</option>
-                            <option value="2t_adm">3º Ano - Técnico em Redes de Computação</option>
-
-                        </optgroup>
+                    <label for="nivel-ensino">Nível de Ensino</label>
+                    <select id="nivel-ensino" required>
+                        <option value="" disabled selected>Selecione o Nível</option>
+                        <option value="fundamental">Ensino Fundamental</option>
+                        <option value="medio">Ensino Médio</option>
+                        <option value="tecnico">Curso Técnico</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="email-responsavel">Email do Responsável</label>
-                    <input type="email" id="email-responsavel" placeholder="email@exemplo.com" required>
+                    <label for="turno">Turno</label>
+                    <select id="turno" required>
+                        <option value="" disabled selected>Selecione o Turno</option>
+                        <option value="manha">Manhã</option>
+                        <option value="tarde">Tarde</option>
+                        <option value="noite">Noite</option>
+                    </select>
                 </div>
+                 <div class="form-group">
+                    <label for="max-alunos">Vagas (Capacidade Máxima)</label>
+                    <input type="number" id="max-alunos" value="30" min="10" max="50" required>
+                </div>
+                
                 <div class="form-actions">
                     <button type="button" class="cancel-btn" onclick="closeModal()">Cancelar</button>
                     <button type="submit" class="submit-btn">
-                        <i class="fas fa-check"></i> Matricular
+                        <i class="fas fa-save"></i> Salvar Turma
                     </button>
                 </div>
             </form>
@@ -81,10 +69,10 @@
                 <a href="#" class="nav-item">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
-                <a href="#" class="nav-item active">
+                <a href="#" class="nav-item">
                     <i class="fas fa-user-graduate"></i> Alunos
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item active">
                     <i class="fas fa-users"></i> Turmas
                 </a>
                 <a href="#" class="nav-item">
@@ -107,27 +95,27 @@
 
         <main class="content">
             <header class="page-header">
-                <h1>Gestão de Alunos</h1>
-                <p>Cadastre e gerencie os alunos da instituição</p>
+                <h1>Gestão de Turmas</h1>
+                <p>Cadastre e gerencie as turmas da instituição</p>
             </header>
 
             <div class="content-card">
                 <div class="card-header">
-                    <h2>Lista de Alunos</h2>
+                    <h2>Lista de Turmas</h2>
                     <div class="actions">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Buscar aluno...">
+                            <input type="text" placeholder="Buscar turma...">
                         </div>
                         <button class="new-student-btn" onclick="openModal()">
-                            <i class="fas fa-plus"></i> Novo Aluno
+                            <i class="fas fa-plus"></i> Nova Turma
                         </button>
                     </div>
                 </div>
 
                 <div class="card-body">
                     <div class="empty-state">
-                        Nenhum aluno cadastrado. Clique em **"Novo Aluno"** para começar.
+                        Nenhuma turma cadastrada. Clique em **"Nova Turma"** para começar.
                     </div>
                 </div>
             </div>
@@ -139,16 +127,13 @@
 
         function openModal() {
             modalOverlay.classList.remove('hidden');
-            // Adiciona a classe 'active' para a animação
             setTimeout(() => {
                 modalOverlay.classList.add('active');
-            }, 10); // Pequeno delay para garantir que o display mude antes da transição
+            }, 10);
         }
 
         function closeModal() {
-            // Remove a classe 'active' para a animação de saída
             modalOverlay.classList.remove('active');
-            // Remove a classe 'hidden' após a transição
             modalOverlay.addEventListener('transitionend', function handler() {
                 modalOverlay.classList.add('hidden');
                 modalOverlay.removeEventListener('transitionend', handler);
