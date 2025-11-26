@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Alunos - Admin</title>
+    <link rel="stylesheet" href="Aluno.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Matricular Novo Aluno</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="enrollment-form">
+                <div class="form-group">
+                    <label for="nome-aluno">Nome Completo</label>
+                    <input type="text" id="nome-aluno" placeholder="Digite o nome completo do aluno" required>
+                </div>
+                <div class="form-group">
+                    <label for="data-nasc">Data de Nascimento</label>
+                    <input type="date" id="data-nasc" required>
+                </div>
+                <div class="form-group">
+                    <label for="turma-aluno">Turma</label>
+                    <select id="turma-aluno" required>
+                        <option value="" disabled selected>Selecione a Turma</option>
+                        <option value="1a">1º Ano A - Ensino Médio</option>
+                        <option value="2b">2º Ano B - Ensino Médio</option>
+                        <option value="3c">3º Ano C - Ensino Médio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email-responsavel">Email do Responsável</label>
+                    <input type="email" id="email-responsavel" placeholder="email@exemplo.com" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check"></i> Matricular
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="app-info">
+                    <span class="app-name">Gestão Escolar</span>
+                    <small class="user-role">Administrador</small>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-user-graduate"></i> Alunos
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i> Turmas
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-id-card"></i> Matrículas
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i> Notas
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bell"></i> Solicitações
+                </a>
+            </nav>
+            
+            <div class="logout">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="page-header">
+                <h1>Gestão de Alunos</h1>
+                <p>Cadastre e gerencie os alunos da instituição</p>
+            </header>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Lista de Alunos</h2>
+                    <div class="actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Buscar aluno...">
+                        </div>
+                        <button class="new-student-btn" onclick="openModal()">
+                            <i class="fas fa-plus"></i> Novo Aluno
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="empty-state">
+                        Nenhum aluno cadastrado. Clique em **"Novo Aluno"** para começar.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const modalOverlay = document.getElementById('modal-overlay');
+
+        function openModal() {
+            modalOverlay.classList.remove('hidden');
+            // Adiciona a classe 'active' para a animação
+            setTimeout(() => {
+                modalOverlay.classList.add('active');
+            }, 10); // Pequeno delay para garantir que o display mude antes da transição
+        }
+
+        function closeModal() {
+            // Remove a classe 'active' para a animação de saída
+            modalOverlay.classList.remove('active');
+            // Remove a classe 'hidden' após a transição
+            modalOverlay.addEventListener('transitionend', function handler() {
+                modalOverlay.classList.add('hidden');
+                modalOverlay.removeEventListener('transitionend', handler);
+            }, { once: true });
+        }
+
+        // Fechar o modal ao clicar fora
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
