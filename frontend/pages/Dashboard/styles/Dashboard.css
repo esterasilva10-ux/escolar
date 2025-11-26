@@ -8,7 +8,8 @@
 
 :root {
     /* Cores */
-    --primary-color: #5375e0; /* Azul do botão ativo e acentos */
+    --primary-color: #5375e0;
+    /* Azul do botão ativo e acentos */
     --background-color: #f7f9fc;
     --sidebar-bg: #ffffff;
     --card-bg: #ffffff;
@@ -104,7 +105,8 @@ body {
 .nav-item.active {
     background-color: var(--primary-color);
     color: white;
-    border-radius: 0 50px 50px 0; /* Arredondamento do lado direito */
+    border-radius: 0 50px 50px 0;
+    /* Arredondamento do lado direito */
     margin-right: 20px;
 }
 
@@ -112,7 +114,7 @@ body {
     font-size: 1.1rem;
     margin-right: 10px;
     /* Simulação de ícones com placeholders */
-    width: 18px; 
+    width: 18px;
     text-align: center;
 }
 
@@ -200,15 +202,27 @@ body {
 }
 
 /* Cores dos ícones */
-.blue-icon { background-color: var(--icon-blue); }
-.green-icon { background-color: var(--icon-green); }
-.purple-icon { background-color: var(--icon-purple); }
-.orange-icon { background-color: var(--icon-orange); }
+.blue-icon {
+    background-color: var(--icon-blue);
+}
+
+.green-icon {
+    background-color: var(--icon-green);
+}
+
+.purple-icon {
+    background-color: var(--icon-purple);
+}
+
+.orange-icon {
+    background-color: var(--icon-orange);
+}
 
 /* 2.2. Caixas de Informação Inferiores (Grid Layout 2 colunas) */
 .info-boxes {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Acesso Rápido maior que Informações */
+    grid-template-columns: 2fr 1fr;
+    /* Acesso Rápido maior que Informações */
     gap: 20px;
 }
 
@@ -259,15 +273,55 @@ body {
 /* Simulação de Ícones - Para perfeição no layout sem biblioteca */
 /* Adapte os ícones (i) para usar Font Awesome (se disponível) ou SVGs. */
 /* Aqui usamos um truque simples para simular presença. */
-.icon-dashboard::before { content: '📊'; }
-.icon-alunos::before { content: '🧑‍🎓'; }
-.icon-turmas::before { content: '🏫'; }
-.icon-matriculas::before { content: '📝'; }
-.icon-notas::before { content: '📑'; }
-.icon-solicitacoes::before { content: '📬'; }
-.icon-sair::before { content: '⬅️'; }
+.icon-dashboard::before {
+    content: '📊';
+}
 
-.icon-card-alunos::before { content: '👥'; }
-.icon-card-turmas::before { content: '📘'; }
-.icon-card-matriculas::before { content: '➕'; }
-.icon-card-solicitacoes::before { content: '📄'; }
+.icon-alunos::before {
+    content: '🧑‍🎓';
+}
+
+.icon-turmas::before {
+    content: '🏫';
+}
+
+.icon-matriculas::before {
+    content: '📝';
+}
+
+.icon-notas::before {
+    content: '📑';
+}
+
+.icon-solicitacoes::before {
+    content: '📬';
+}
+
+.icon-sair::before {
+    content: '⬅️';
+}
+
+.icon-card-alunos::before {
+    content: '👥';
+}
+
+.icon-card-turmas::before {
+    content: '📘';
+}
+
+.icon-card-matriculas::before {
+    content: '➕';
+}
+
+.icon-card-solicitacoes::before {
+    content: '📄';
+}
+
+section {
+    display: none;
+}
+
+.active-section { 
+    display: block;
+}
+

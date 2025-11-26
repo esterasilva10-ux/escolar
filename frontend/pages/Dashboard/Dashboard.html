@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="Dashboard.css">
+    <link rel="stylesheet" href="styles/Dashboard.css">
+    <link rel="stylesheet" href="styles/alunos.css">
+    <link rel="stylesheet" href="styles/turmas.css">
 </head>
+
 <body>
     <div class="container">
         <aside class="sidebar">
@@ -16,7 +20,7 @@
                     <span class="subtitle">Administrador</span>
                 </div>
             </div>
-            
+
             <nav class="nav-menu">
                 <ul>
                     <li class="nav-item active">
@@ -46,79 +50,238 @@
         </aside>
 
         <main class="main-content">
-            <div class="welcome-header">
-                <h2>Bem-vindo, Administrador!</h2>
-                <p>Aqui está um resumo do sistema de gestão escolar</p>
-            </div>
+            <section>
 
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="info">
-                        <span class="title">Total de Alunos</span>
-                        <div class="value">0</div>
+                <div class="welcome-header">
+                    <h2>Bem-vindo, Administrador!</h2>
+                    <p>Aqui está um resumo do sistema de gestão escolar</p>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="info">
+                            <span class="title">Total de Alunos</span>
+                            <div class="value">0</div>
+                        </div>
+                        <div class="card-icon blue-icon">
+                            <i class="icon-card-alunos"></i>
+                        </div>
                     </div>
-                    <div class="card-icon blue-icon">
-                        <i class="icon-card-alunos"></i>
+
+                    <div class="stat-card">
+                        <div class="info">
+                            <span class="title">Turmas Ativas</span>
+                            <div class="value">0</div>
+                        </div>
+                        <div class="card-icon green-icon">
+                            <i class="icon-card-turmas"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="info">
+                            <span class="title">Matrículas Ativas</span>
+                            <div class="value">0</div>
+                        </div>
+                        <div class="card-icon purple-icon">
+                            <i class="icon-card-matriculas"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="info">
+                            <span class="title">Solicitações Pendentes</span>
+                            <div class="value">0</div>
+                        </div>
+                        <div class="card-icon orange-icon">
+                            <i class="icon-card-solicitacoes"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="info">
-                        <span class="title">Turmas Ativas</span>
-                        <div class="value">0</div>
+                <div class="info-boxes">
+                    <div class="info-box quick-access">
+                        <h3>Acesso Rápido</h3>
+                        <p>Use o menu lateral para navegar entre as diferentes seções do sistema.</p>
+                        <p>Como **administrador**, você tem acesso completo a todas as funcionalidades.</p>
                     </div>
-                    <div class="card-icon green-icon">
-                        <i class="icon-card-turmas"></i>
+
+                    <div class="info-box system-info">
+                        <h3>Informações do Sistema</h3>
+                        <table>
+                            <tr>
+                                <td>Versão:</td>
+                                <td>**1.0.0**</td>
+                            </tr>
+                            <tr>
+                                <td>Perfil:</td>
+                                <td>**Admin**</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>**admin@escola.com**</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alunos-section">
+
+                <!-- MODAL -->
+                <div id="modal-overlay" class="modal-overlay hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Matricular Novo Aluno</h2>
+                            <button class="close-btn" onclick="closeModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <form id="enrollment-form" class="enrollment-form">
+                            <div class="form-group">
+                                <label for="nome-aluno">Nome Completo</label>
+                                <input type="text" id="nome-aluno" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="data-nasc">Data de Nascimento</label>
+                                <input type="date" id="data-nasc" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="turma-aluno">Turma</label>
+                                <select id="turma-aluno" required>
+                                    <option value="" disabled selected>Selecione a Turma</option>
+
+                                    <optgroup label="Ensino Fundamental">
+                                        <option value="6º Ano A">6º Ano A</option>
+                                        <option value="7º Ano B">7º Ano B</option>
+                                        <option value="8º Ano C">8º Ano C</option>
+                                        <option value="9º Ano D">9º Ano D</option>
+                                    </optgroup>
+
+                                    <optgroup label="Ensino Médio">
+                                        <option value="1º Ano A">1º Ano A</option>
+                                        <option value="2º Ano B">2º Ano B</option>
+                                        <option value="3º Ano C">3º Ano C</option>
+                                    </optgroup>
+
+                                    <optgroup label="Cursos Técnicos">
+                                        <option value="Técnico em Informática">Técnico em Informática</option>
+                                        <option value="Técnico em Administração">Técnico em Administração</option>
+                                        <option value="Técnico em Redes">Técnico em Redes</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email-responsavel">Email do Responsável</label>
+                                <input type="email" id="email-responsavel" required>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="closeModal()">Cancelar</button>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-check"></i> Matricular
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="info">
-                        <span class="title">Matrículas Ativas</span>
-                        <div class="value">0</div>
+                <!-- CONTEÚDO ALUNOS -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Lista de Alunos</h2>
+
+                        <div class="actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" placeholder="Buscar aluno..."
+                                    onkeyup="buscarAlunos()">
+                            </div>
+
+                            <button class="new-student-btn" onclick="openModal()">
+                                <i class="fas fa-plus"></i> Novo Aluno
+                            </button>
+                        </div>
                     </div>
-                    <div class="card-icon purple-icon">
-                        <i class="icon-card-matriculas"></i>
+
+                    <div class="card-body">
+                        <table id="alunos-table" class="alunos-table">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nome Completo</th>
+                                    <th>Turma</th>
+                                    <th>Nasc.</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alunos-list"></tbody>
+                        </table>
+
+                        <div id="empty-state" class="empty-state">
+                            Nenhum aluno cadastrado. Clique em <strong>Novo Aluno</strong> para começar.
+                        </div>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="info">
-                        <span class="title">Solicitações Pendentes</span>
-                        <div class="value">0</div>
-                    </div>
-                    <div class="card-icon orange-icon">
-                        <i class="icon-card-solicitacoes"></i>
-                    </div>
-                </div>
-            </div>
+            </section>
 
-            <div class="info-boxes">
-                <div class="info-box quick-access">
-                    <h3>Acesso Rápido</h3>
-                    <p>Use o menu lateral para navegar entre as diferentes seções do sistema.</p>
-                    <p>Como **administrador**, você tem acesso completo a todas as funcionalidades.</p>
-                </div>
 
-                <div class="info-box system-info">
-                    <h3>Informações do Sistema</h3>
-                    <table>
-                        <tr>
-                            <td>Versão:</td>
-                            <td>**1.0.0**</td>
-                        </tr>
-                        <tr>
-                            <td>Perfil:</td>
-                            <td>**Admin**</td>
-                        </tr>
-                        <tr>
-                            <td>Email:</td>
-                            <td>**admin@escola.com**</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            <section class="container">
+                <main class="content">
+                    <header class="page-header">
+                        <h1>Gestão de Turmas</h1>
+                        <p>Cadastre e gerencie as turmas da instituição</p>
+                    </header>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Lista de Turmas</h2>
+                            <div class="actions">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="search-input" placeholder="Buscar turma..."
+                                        onkeyup="buscarTurmas()">
+                                </div>
+                                <button class="new-student-btn" onclick="openModal()">
+                                    <i class="fas fa-plus"></i> Nova Turma
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <table id="turmas-table" class="alunos-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome da Turma</th>
+                                        <th>Nível</th>
+                                        <th>Início</th>
+                                        <th>Vagas</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="turmas-list">
+                                </tbody>
+                            </table>
+
+                            <div id="empty-state" class="empty-state">
+                                Nenhuma turma cadastrada. Clique em **"Nova Turma"** para começar.
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </section>
+            
         </main>
     </div>
+
+    <script src="scripts/Dashboard.js"></script>
+    <script src="scripts/aluno.js"></script>
+    <script src="scripts/turma.js"></script>
 </body>
+
 </html>

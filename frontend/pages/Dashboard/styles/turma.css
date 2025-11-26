@@ -22,13 +22,13 @@ body {
     color: var(--text-dark);
 }
 
-/* --- Container Principal --- */
+/* --- 1. Container Principal --- */
 .container {
     display: flex;
     min-height: 100vh;
 }
 
-/* --- Sidebar (Menu Lateral) --- */
+/* --- 2. Sidebar (Menu Lateral) --- */
 .sidebar {
     width: var(--sidebar-width);
     background-color: var(--card-bg);
@@ -82,7 +82,7 @@ body {
 
 .nav-item i {
     margin-right: 15px;
-    width: 20px; /* Garante alinhamento dos ícones */
+    width: 20px; 
 }
 
 .nav-item:hover:not(.active) {
@@ -90,20 +90,23 @@ body {
     color: var(--text-dark);
 }
 
+/* Item Ativo */
 .nav-item.active {
     background-color: var(--primary-color);
     color: var(--card-bg);
-    border-right: 3px solid var(--primary-color); /* Adiciona um pequeno efeito visual */
+    border-right: 3px solid var(--primary-color);
+}
+.nav-item.active i {
+    color: var(--card-bg);
 }
 
-/* Estilo para a seção Sair */
 .logout {
     border-top: 1px solid var(--border-color);
     padding-top: 10px;
 }
 
 .logout .nav-item {
-    color: #f44336; /* Cor de destaque para sair */
+    color: #f44336;
 }
 
 .logout .nav-item:hover {
@@ -112,7 +115,7 @@ body {
 }
 
 
-/* --- Conteúdo Principal --- */
+/* --- 3. Conteúdo Principal --- */
 .content {
     flex-grow: 1;
     padding: 30px;
@@ -131,7 +134,7 @@ body {
     font-size: 14px;
 }
 
-/* Card de Conteúdo (Lista de Alunos) */
+/* Card de Conteúdo */
 .content-card {
     background-color: var(--card-bg);
     border-radius: 8px;
@@ -159,7 +162,7 @@ body {
     align-items: center;
 }
 
-/* Busca de Alunos */
+/* Busca */
 .search-box {
     display: flex;
     align-items: center;
@@ -182,7 +185,7 @@ body {
     font-size: 14px;
 }
 
-/* Botão Novo Aluno */
+/* Botão Novo/Nova */
 .new-student-btn {
     background-color: var(--primary-color);
     color: var(--card-bg);
@@ -213,20 +216,74 @@ body {
     background-color: #fafafa;
 }
 
-/* --- Modal Flutuante de Matrícula --- */
 
-/* Overlay - Cobre a tela toda e a deixa escura */
+/* --- 4. Tabela de Listagem --- */
+.alunos-table { /* Reutilizando a classe, mas nome adequado seria .data-table */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.alunos-table thead tr {
+    background-color: #f0f0f0;
+    text-align: left;
+}
+
+.alunos-table th, .alunos-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.alunos-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.alunos-table td:last-child {
+    width: 120px; 
+    text-align: center;
+}
+
+/* Botões de Ação na Tabela */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    transition: color 0.2s;
+}
+
+.view-btn {
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    color: #e74c3c; 
+}
+
+.view-btn:hover {
+    color: var(--primary-light);
+}
+
+.delete-btn:hover {
+    color: #c0392b;
+}
+
+
+/* --- 5. Modal Flutuante de Cadastro --- */
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparente */
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Garante que fique acima de todo o conteúdo */
+    z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -239,20 +296,19 @@ body {
     opacity: 1;
 }
 
-/* Conteúdo do Modal - O pop-up em si */
 .modal-content {
     background-color: var(--card-bg);
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    transform: scale(0.9); /* Início da animação */
+    transform: scale(0.9); 
     transition: transform 0.3s ease-in-out;
     padding: 30px;
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1); /* Fim da animação (escala normal) */
+    transform: scale(1); 
 }
 
 .modal-header {
@@ -281,7 +337,6 @@ body {
     color: var(--text-dark);
 }
 
-/* Formulário de Matrícula */
 .enrollment-form {
     display: flex;
     flex-direction: column;
@@ -315,7 +370,6 @@ body {
     box-shadow: 0 0 0 2px rgba(74, 85, 225, 0.2);
 }
 
-/* Ações do Formulário (Botões) */
 .form-actions {
     display: flex;
     justify-content: flex-end;
