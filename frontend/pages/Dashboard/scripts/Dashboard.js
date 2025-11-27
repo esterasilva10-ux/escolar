@@ -57,5 +57,14 @@ function deletarAluno(matricula) {
         alunos = alunos.filter(a => a.matricula !== matricula);
         saveAlunos(alunos);
         renderizarAlunos();
+
+        function mostrarSecao(secaoId) {
+    // Esconde todas
+    document.querySelectorAll("main section").forEach(sec => sec.style.display = "none");
+
+    // Mostra só a selecionada
+    document.getElementById(secaoId).style.display = "block";
+}
+
     }
 }

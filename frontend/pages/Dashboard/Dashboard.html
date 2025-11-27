@@ -46,6 +46,17 @@
 
             <div class="logout-link">
                 <i class="icon-sair"></i> Sair
+                <a class="nav-item" onclick="mostrarSecao('dashboard-section')">
+    <i class="fas fa-home"></i> Dashboard
+</a>
+
+<a class="nav-item" onclick="mostrarSecao('alunos-section')">
+    <i class="fas fa-user-graduate"></i> Alunos
+</a>
+
+<a class="nav-item" onclick="mostrarSecao('turmas-section')">
+    <i class="fas fa-chalkboard"></i> Turmas
+</a>
             </div>
         </aside>
 
@@ -231,7 +242,7 @@
             </section>
 
 
-            <section class="container">
+            <section id="turmas-section" class="container" style="display:none;">
                 <main class="content">
                     <header class="page-header">
                         <h1>Gestão de Turmas</h1>
