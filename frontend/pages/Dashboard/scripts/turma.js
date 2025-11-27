@@ -1,4 +1,12 @@
+function mostrarTela(tela) {
+    // esconde todas as telas
+    document.querySelectorAll("section").forEach(sec => {
+        sec.style.display = "none";
+    });
 
+    // mostra a tela clicada
+    document.getElementById(`${tela}-section`).style.display = "block";
+}
 const modalOverlay = document.getElementById('modal-overlay');
 const form = document.getElementById('new-turma-form');
 const turmasListBody = document.getElementById('turmas-list');

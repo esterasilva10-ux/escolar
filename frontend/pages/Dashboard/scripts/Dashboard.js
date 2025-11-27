@@ -1,4 +1,4 @@
-// --- CONTROLE DE SEÇÕES DO DASHBOARD ---
+
 const sections = document.querySelectorAll('main section');
 console.log(sections);
 const navItems = document.querySelectorAll('.nav-menu ul li');
