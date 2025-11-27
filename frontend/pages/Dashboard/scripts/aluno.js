@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------
-// --- FUNÇÕES DA ÁREA DE ALUNOS (funcionam apenas dentro do dashboard)
+// --- FUNÇÕES DA ÁREA DE ALUNOS
 // --------------------------------------------------------------------
 
 const modalOverlay = document.getElementById('modal-overlay');
@@ -11,22 +11,28 @@ const searchInput = document.getElementById('search-input');
 // ----------------------- MODAL ------------------------
 
 function openModal() {
-    form.reset();
-    modalOverlay.classList.remove('hidden');
-    setTimeout(() => modalOverlay.classList.add('active'), 10);
+    if (form) form.reset();
+    if (modalOverlay) {
+        modalOverlay.classList.remove('hidden');
+        setTimeout(() => modalOverlay.classList.add('active'), 10);
+    }
 }
 
 function closeModal() {
-    modalOverlay.classList.remove('active');
-    modalOverlay.addEventListener('transitionend', function handler() {
-        modalOverlay.classList.add('hidden');
-        modalOverlay.removeEventListener('transitionend', handler);
-    }, { once: true });
+    if (modalOverlay) {
+        modalOverlay.classList.remove('active');
+        modalOverlay.addEventListener('transitionend', function handler() {
+            modalOverlay.classList.add('hidden');
+            modalOverlay.removeEventListener('transitionend', handler);
+        }, { once: true });
+    }
 }
 
-modalOverlay.addEventListener('click', e => {
-    if (e.target === modalOverlay) closeModal();
-});
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', e => {
+        if (e.target === modalOverlay) closeModal();
+    });
+}
 
 // ----------------------- STORAGE ------------------------
 
@@ -46,7 +52,10 @@ function gerarMatricula() {
 // ----------------------- LISTAGEM ------------------------
 
 function renderizarAlunos(filtro = '') {
+    if (!alunosListBody) return;
+    
     const alunos = getAlunos();
+    const alunosTable = document.getElementById('alunos-table');
 
     const filtrados = alunos.filter(a =>
         a.nome.toLowerCase().includes(filtro.toLowerCase()) ||
@@ -57,11 +66,11 @@ function renderizarAlunos(filtro = '') {
     alunosListBody.innerHTML = '';
 
     if (filtrados.length === 0) {
-        emptyState.style.display = 'block';
-        document.getElementById('alunos-table').style.display = 'none';
+        if (emptyState) emptyState.style.display = 'block';
+        if (alunosTable) alunosTable.style.display = 'none';
     } else {
-        emptyState.style.display = 'none';
-        document.getElementById('alunos-table').style.display = 'table';
+        if (emptyState) emptyState.style.display = 'none';
+        if (alunosTable) alunosTable.style.display = 'table';
 
         filtrados.forEach(aluno => {
             const row = alunosListBody.insertRow();
@@ -84,35 +93,61 @@ function renderizarAlunos(filtro = '') {
     }
 }
 
-// Função para abrir o modal
-function openModal() {
-    document.getElementById("modal-overlay").classList.remove("hidden");
+// ------------------ AÇÕES CRUD -------------------
+
+function matricularAluno(e) {
+    e.preventDefault();
+
+    const novoAluno = {
+        matricula: gerarMatricula(),
+        nome: document.getElementById('nome-aluno').value.trim(),
+        nascimento: document.getElementById('data-nasc').value,
+        turma: document.getElementById('turma-aluno').value,
+        emailResponsavel: document.getElementById('email-responsavel').value
+    };
+
+    const alunos = getAlunos();
+    alunos.push(novoAluno);
+    saveAlunos(alunos);
+
+    closeModal();
+    renderizarAlunos();
 }
 
-// Função para fechar o modal
-function closeModal() {
-    document.getElementById("modal-overlay").classList.add("hidden");
+function buscarAlunos() {
+    if (searchInput) {
+        renderizarAlunos(searchInput.value);
+    }
 }
 
-// Inserir 1 aluno fixo ao carregar
-window.onload = function () {
-    const tabela = document.getElementById("alunos-list");
-    const emptyState = document.getElementById("empty-state");
+function deletarAluno(matricula) {
+    if (confirm(`Deseja excluir o aluno ${matricula}?`)) {
+        let alunos = getAlunos();
+        alunos = alunos.filter(a => a.matricula !== matricula);
+        saveAlunos(alunos);
+        renderizarAlunos();
+    }
+}
 
-    // Criando um aluno padrão
-    const aluno = `
-        <tr>
-            <td>MAT1764163606945</td>
-            <td>Dudu</td>
-            <td>1º Ano A</td>
-            <td>15/04/2008</td>
-            <td>
-                <i class="fas fa-edit action-btn"></i>
-                <i class="fas fa-trash action-btn"></i>
-            </td>
-        </tr>
-    `;
+// Inicialização
+if (form) {
+    form.addEventListener('submit', matricularAluno);
+}
 
-    tabela.innerHTML = aluno;
-    emptyState.style.display = "none";
-};
+// Carregar dados iniciais quando a página estiver pronta
+document.addEventListener('DOMContentLoaded', function() {
+    // Insere aluno de exemplo se não houver alunos
+    const alunos = getAlunos();
+    if (alunos.length === 0) {
+        const alunoExemplo = {
+            matricula: 'MAT1764163606945',
+            nome: 'Dudu',
+            nascimento: '2008-04-15',
+            turma: '1º Ano A',
+            emailResponsavel: 'responsavel@email.com'
+        };
+        alunos.push(alunoExemplo);
+        saveAlunos(alunos);
+    }
+    renderizarAlunos();
+});

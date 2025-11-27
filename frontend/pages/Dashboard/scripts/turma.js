@@ -1,45 +1,44 @@
-function mostrarTela(tela) {
-    // esconde todas as telas
-    document.querySelectorAll("section").forEach(sec => {
-        sec.style.display = "none";
-    });
+// --------------------------------------------------------------------
+// --- FUNÇÕES DA ÁREA DE TURMAS
+// --------------------------------------------------------------------
 
-    // mostra a tela clicada
-    document.getElementById(`${tela}-section`).style.display = "block";
-}
-const modalOverlay = document.getElementById('modal-overlay');
-const form = document.getElementById('new-turma-form');
+const turmaModalOverlay = document.getElementById('modal-overlay');
+const turmaForm = document.getElementById('new-turma-form');
 const turmasListBody = document.getElementById('turmas-list');
-const emptyState = document.getElementById('empty-state');
-const searchInput = document.getElementById('search-input');
+const turmaEmptyState = document.getElementById('empty-state');
+const turmaSearchInput = document.getElementById('search-input');
 const turmasTable = document.getElementById('turmas-table');
 
 // --- Funções de Controle do Modal ---
-
-function openModal() {
-    form.reset();
-    modalOverlay.classList.remove('hidden');
-    setTimeout(() => {
-        modalOverlay.classList.add('active');
-    }, 10);
-}
-
-function closeModal() {
-    modalOverlay.classList.remove('active');
-    modalOverlay.addEventListener('transitionend', function handler() {
-        modalOverlay.classList.add('hidden');
-        modalOverlay.removeEventListener('transitionend', handler);
-    }, { once: true });
-}
-
-modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) {
-        closeModal();
+function openTurmaModal() {
+    if (turmaForm) turmaForm.reset();
+    if (turmaModalOverlay) {
+        turmaModalOverlay.classList.remove('hidden');
+        setTimeout(() => {
+            turmaModalOverlay.classList.add('active');
+        }, 10);
     }
-});
+}
+
+function closeTurmaModal() {
+    if (turmaModalOverlay) {
+        turmaModalOverlay.classList.remove('active');
+        turmaModalOverlay.addEventListener('transitionend', function handler() {
+            turmaModalOverlay.classList.add('hidden');
+            turmaModalOverlay.removeEventListener('transitionend', handler);
+        }, { once: true });
+    }
+}
+
+if (turmaModalOverlay) {
+    turmaModalOverlay.addEventListener('click', (e) => {
+        if (e.target === turmaModalOverlay) {
+            closeTurmaModal();
+        }
+    });
+}
 
 // --- Funções de Persistência (Local Storage) ---
-
 function getTurmas() {
     const turmasJson = localStorage.getItem('turmas');
     return turmasJson ? JSON.parse(turmasJson) : [];
@@ -50,54 +49,48 @@ function saveTurmas(turmas) {
 }
 
 // --- Geração de Conteúdo e Listagem ---
-
 function renderizarTurmas(filtro = '') {
+    if (!turmasListBody) return;
+    
     const turmas = getTurmas();
 
-    // Filtra as turmas
     const turmasFiltradas = turmas.filter(turma =>
         turma.nome.toLowerCase().includes(filtro.toLowerCase()) ||
         turma.nivel.toLowerCase().includes(filtro.toLowerCase())
     );
 
-    turmasListBody.innerHTML = ''; // Limpa a lista atual
+    turmasListBody.innerHTML = '';
 
     if (turmasFiltradas.length === 0) {
-        emptyState.style.display = 'block';
-        turmasTable.style.display = 'none';
+        if (turmaEmptyState) turmaEmptyState.style.display = 'block';
+        if (turmasTable) turmasTable.style.display = 'none';
     } else {
-        emptyState.style.display = 'none';
-        turmasTable.style.display = 'table';
+        if (turmaEmptyState) turmaEmptyState.style.display = 'none';
+        if (turmasTable) turmasTable.style.display = 'table';
 
         turmasFiltradas.forEach(turma => {
             const row = turmasListBody.insertRow();
 
-            // Colunas ajustadas
             row.insertCell().textContent = turma.nome;
             row.insertCell().textContent = turma.nivel;
 
-            // Data formatada para BR
             const dataFormatada = new Date(turma.dataInicio + 'T00:00:00').toLocaleDateString('pt-BR');
             row.insertCell().textContent = dataFormatada;
 
             row.insertCell().textContent = `${turma.vagas} vagas`;
 
-            // Coluna Ações
             const acoesCell = row.insertCell();
             acoesCell.innerHTML = `
-                        <button class="action-btn view-btn" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn delete-btn" title="Excluir" onclick="deletarTurma('${turma.nome + turma.dataInicio}')"><i class="fas fa-trash"></i></button>
-                    `;
+                <button class="action-btn view-btn" title="Ver Detalhes"><i class="fas fa-eye"></i></button>
+                <button class="action-btn delete-btn" title="Excluir" onclick="deletarTurma('${turma.nome + turma.dataInicio}')"><i class="fas fa-trash"></i></button>
+            `;
 
-            // Usando uma chave composta para exclusão, já que o código/sigla foi removido
             row.setAttribute('data-key', turma.nome + turma.dataInicio);
         });
     }
 }
 
 // --- Funções de Ação (CRUD) ---
-
-// Função de Cadastro (acionada pelo submit do formulário)
 function cadastrarTurma(event) {
     event.preventDefault();
 
@@ -108,12 +101,9 @@ function cadastrarTurma(event) {
         vagas: document.getElementById('max-alunos').value
     };
 
-    // Usando uma chave simples (Nome + Data) para identificação
     const turmaKey = novoTurma.nome + novoTurma.dataInicio;
-
     const turmas = getTurmas();
 
-    // Validação de duplicidade
     const existe = turmas.some(t => (t.nome + t.dataInicio) === turmaKey);
 
     if (existe) {
@@ -124,21 +114,20 @@ function cadastrarTurma(event) {
     turmas.push(novoTurma);
     saveTurmas(turmas);
 
-    closeModal();
-    renderizarTurmas(); // Atualiza a lista
+    closeTurmaModal();
+    renderizarTurmas();
 }
 
-// Função de Busca 
 function buscarTurmas() {
-    const filtro = searchInput.value;
-    renderizarTurmas(filtro);
+    if (turmaSearchInput) {
+        const filtro = turmaSearchInput.value;
+        renderizarTurmas(filtro);
+    }
 }
 
-// Função de Exclusão
 function deletarTurma(key) {
     if (confirm(`Tem certeza que deseja excluir esta turma?`)) {
         let turmas = getTurmas();
-        // Filtra e mantém apenas as turmas que NÃO têm a chave (Nome + Data)
         turmas = turmas.filter(turma => (turma.nome + turma.dataInicio) !== key);
         saveTurmas(turmas);
         renderizarTurmas();
@@ -146,6 +135,11 @@ function deletarTurma(key) {
 }
 
 // --- Inicialização ---
+if (turmaForm) {
+    turmaForm.addEventListener('submit', cadastrarTurma);
+}
 
-form.addEventListener('submit', cadastrarTurma);
-window.onload = renderizarTurmas;
+// Carregar dados iniciais
+document.addEventListener('DOMContentLoaded', function() {
+    renderizarTurmas();
+});
